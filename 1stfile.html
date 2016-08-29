@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<head>
+<meta charset="ISO-8859-1">
+
+</head>
+<body>
+<div data-ng-app="NikVaib" data-ng-controller="triers">
+<div>
+<button type="button" rowspan=1 style="width: 141px;vertical-align: bottom;">Search </button>
+<input title="Contacts" data-ng-model="searchbox" type="text" placeholder="Search" data-primitive="input" size="50">{{searchbox}}
+   <table cellspacing=0 cellpadding=0 border="0" role="presentation">
+   
+				<thead>				
+				<tr>
+					<th><input rowspan=1 type="checkbox" data-ng-model="selectAll"><th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Phone Number</th>
+					<th>Email Id</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr data-ng-repeat = "item in todo">
+					<td>item.checked</td>
+					<td>item.firstname</td>
+					<td>item.lastname</td>
+					<td>item.phone</td>
+					<td>item.email</td>
+					
+				</tr>
+				<tr>
+					<td><input type="checkbox" data-ng-checked="selectAll" data-ng-model="checked"></td>
+					<td><input type="text" data-ng-model="todoList.first_name" rowspan=3 style="width: 141px;vertical-align: bottom;"></td>
+					<td><input type="text" data-ng-model="todoList.last_name" rowspan=3 style="width: 141px;vertical-align: bottom;"></td>
+					<td><input type="text" data-ng-model="todoList.phone_number" rowspan=3 style="width: 141px;vertical-align: bottom;"></td>
+					<td><input type="text" data-ng-model="todoList.email_id" rowspan=3 style="width: 141px;vertical-align: bottom;"></td>
+				
+				</tr>
+				</tbody>
+	</table>
+				
+	</div>
+
+<div>
+    <table>
+				<tr>
+				 	<button type="button" rowspan=1 style="width: 141px;vertical-align: bottom;" data-ng-click = "save()">Add </button>
+				 	<button type="button" rowspan=1 style="width: 141px;vertical-align: bottom;">Remove </button>
+				 	<button type="button" rowspan=1 style="width: 141px;vertical-align: bottom;">Edit</button>
+				</tr>
+	</table>
+
+</div>
+
+</div>
+<script>
+var app = angular.module('NikVaib', []);
+app.run(function($http) {
+
+  $http.get("1st.json").success(function(response) {
+    $scope.model = response.data;
+  }).error(function(data,status){
+  	alert(status);
+  });
+
+}); 
+app.controller('triers',['$scope', function($scope) {
+	$scope.update={};
+    $scope.searchbox = "";
+    $scope.todo = $scope.model;
+    $scope.todoList = {};
+    $scope.update = {
+						"select_checkbox" : $scope.todo.checked,
+						"enter_firstname" : $scope.todo.first_name,
+						"enter_lastname" : $scope.todo.last_name,
+						"enter_phoneno." : $scope.todo.phone_number,
+						"enter_emailid": $scope.todo.email_id,
+					};
+    $scope.save = function() {
+    $http.post('C:\epricerDev\rewrite\workspace\NikVaib2\1st.json', $scope.todo.items).then(function(data) {
+       });
+  }; 
+}]);
+</script>
+</body>
+</html>
